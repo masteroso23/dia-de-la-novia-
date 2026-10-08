@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mi carta para ti</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600&family=Young+Serif&display=swap" rel="stylesheet">
+<style>
+@page{size:A4; margin:0}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:#cfdcf5; font-family:"Figtree",system-ui,sans-serif; color:#1b2a5e; -webkit-print-color-adjust:exact; print-color-adjust:exact}
+.barra{position:sticky; top:0; z-index:5; display:flex; flex-wrap:wrap; gap:.8rem; justify-content:center; align-items:center; padding:.7rem; background:#0c1a4a; color:#f4f7ff; font-size:.95rem}
+.barra button,.barra a{font:inherit; font-weight:600; background:#f5c84b; color:#2a1d00; border:0; border-radius:999px; padding:.5rem 1.1rem; cursor:pointer; text-decoration:none}
+
+.hoja{
+  width:210mm; min-height:297mm; margin:1rem auto; position:relative; overflow:hidden;
+  padding:29mm 24mm 25mm; box-shadow:0 6px 24px rgba(0,0,0,.25);
+  background:linear-gradient(#e3ecff 0%, #f8fbff 16%, #f8fbff 84%, #dfeaff 100%);
+}
+.marco{position:absolute; inset:9mm; border:1.3px solid #3f6fdc; border-radius:6mm; pointer-events:none}
+.marco::after{content:""; position:absolute; inset:2mm; border:.6px solid #9bbcf7; border-radius:4.5mm}
+
+/* Ramito azul de las esquinas */
+.esq{position:absolute; width:32mm; height:32mm}
+.e1{top:5mm; left:5mm}
+.e2{top:5mm; right:5mm; transform:scaleX(-1)}
+.e3{bottom:5mm; left:5mm; transform:scaleY(-1)}
+.e4{bottom:5mm; right:5mm; transform:scale(-1,-1)}
+
+/* Corazones sueltos en los márgenes */
+.c{position:absolute; color:#8fb3f5; opacity:.55}
+.c1{top:46%; left:13mm; width:5mm; height:5mm}
+.c2{top:30%; right:13.5mm; width:4mm; height:4mm; opacity:.4}
+.c3{top:63%; right:13mm; width:6mm; height:6mm}
+.c4{top:75%; left:14mm; width:4mm; height:4mm; opacity:.4}
+.c5{top:22%; left:14mm; width:3.5mm; height:3.5mm; opacity:.35}
+
+.contenido{position:relative}
+.intro{font-style:italic; font-size:10.8pt; line-height:1.55; margin:0 0 6mm; text-align:center; color:#2c3f8f}
+h1{font-family:"Young Serif",Georgia,serif; font-weight:400; font-size:17pt; line-height:1.3; margin:0 0 3mm; text-align:center; color:#1f3fa3; overflow-wrap:anywhere}
+.corazones{display:flex; justify-content:center; align-items:center; gap:3mm; margin:0 0 6mm}
+.corazones svg{width:4mm; height:4mm}
+.corazones svg:nth-child(2){width:6mm; height:6mm}
+.corazones svg:nth-child(1),.corazones svg:nth-child(5){color:#9bbcf7}
+.corazones svg:nth-child(2),.corazones svg:nth-child(4){color:#6f9cf0}
+.corazones svg:nth-child(3){color:#3f6fdc; width:7mm; height:7mm}
+.cuerpo p{font-size:11pt; line-height:1.55; margin:0 0 4mm; overflow-wrap:anywhere}
+.cierre{display:flex; align-items:center; justify-content:center; gap:3mm; margin:7mm 0 0}
+.cierre p{margin:0; font-family:"Young Serif",Georgia,serif; font-size:13.5pt; line-height:1.4; text-align:center; color:#1f3fa3}
+.cierre svg{width:6mm; height:6mm; flex:none; color:#6f9cf0}
+
+@media print{
+  body{background:none}
+  .barra{display:none}
+  .hoja{margin:0; box-shadow:none; height:296.5mm; min-height:0}
+}
+</style>
+</head>
+<body>
+
+<div class="barra">
+  <span>Para imprimir: elige "Guardar como PDF" o tu impresora, tamaño A4, sin márgenes.</span>
+  <button onclick="window.print()">Imprimir</button>
+  <a href="index.html">Volver al jardín</a>
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="corazon" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+    </symbol>
+    <symbol id="florazul" viewBox="-12 -12 24 24">
+      <g fill="#6f9cf0">
+        <circle cy="-6.5" r="5"/><circle cx="6.2" cy="-2" r="5"/><circle cx="3.8" cy="5.3" r="5"/>
+        <circle cx="-3.8" cy="5.3" r="5"/><circle cx="-6.2" cy="-2" r="5"/>
+      </g>
+      <circle r="3.2" fill="#f5c84b"/>
+    </symbol>
+    <symbol id="ramo" viewBox="0 0 60 60">
+      <g fill="#8fb3f5"><ellipse cx="30" cy="14" rx="9" ry="3.5" transform="rotate(-20 30 14)"/><ellipse cx="14" cy="32" rx="9" ry="3.5" transform="rotate(60 14 32)"/></g>
+      <use href="#florazul" x="4" y="4" width="26" height="26"/>
+      <use href="#florazul" x="32" y="2" width="16" height="16"/>
+      <use href="#florazul" x="2" y="32" width="15" height="15"/>
+      <use href="#corazon" x="34" y="26" width="13" height="13" style="color:#9bbcf7"/>
+      <use href="#corazon" x="22" y="40" width="8" height="8" style="color:#3f6fdc"/>
+    </symbol>
+  </defs>
+</svg>
+
+<main class="hoja">
+  <div class="marco"></div>
+  <svg class="esq e1"><use href="#ramo"/></svg>
+  <svg class="esq e2"><use href="#ramo"/></svg>
+  <svg class="esq e3"><use href="#ramo"/></svg>
+  <svg class="esq e4"><use href="#ramo"/></svg>
+
+  <svg class="c c1"><use href="#corazon"/></svg>
+  <svg class="c c2"><use href="#corazon"/></svg>
+  <svg class="c c3"><use href="#corazon"/></svg>
+  <svg class="c c4"><use href="#corazon"/></svg>
+  <svg class="c c5"><use href="#corazon"/></svg>
+
+  <div class="contenido">
+    <p class="intro">Hola, amorcito de mi vida, perdón que solo sea esto. Solo me quedan 10 pesos, pero no quiero que te quedes sin nada, entonces pensé en hacerte algo muy bonito para no dejarte sin nada. Espero te guste, mi amorcito.</p>
+
+    <h1>FELIZ DÍA DE LA NOVIA, MI NIÑA HERMOSAAAAAAAAAAAAAAAAAAAAA</h1>
+
+    <div class="corazones" aria-hidden="true">
+      <svg><use href="#corazon"/></svg><svg><use href="#corazon"/></svg><svg><use href="#corazon"/></svg><svg><use href="#corazon"/></svg><svg><use href="#corazon"/></svg>
+    </div>
+
+    <div class="cuerpo">
+      <p>No sabes cómo agradezco el tenerte a ti como mi novia amorcito precioso. El volver a recordar me demuestra el porqué soy la persona más afortunada del mundo. Desde la pandemia hasta hoy te he amado como no tienes una idea, y te voy a seguir amando por siempre amor bonito, bello, precioso. Me encanta el cómo, desde esas votaciones, hemos podido conectar de una forma tan hermosa, y que sin darnos un abrazo, un beso ni vernos a los ojos ya me tenías perdidamente enamorado mi niña preciosa. Ahora que estamos en la uni, no puedo estar más agradecido de seguir dándome la oportunidad de seguir a tu lado siendo felices y sobre todo, que te ame demasiadísimo. Agradezco la paciencia que me has tenido siempre, la comprensión que siempre has demostrado conmigo y en los problemas que me pueden llegar a surgir, y que no te has ido cuando te he necesitado. En mis momentos más tristes y feos has seguido conmigo para ayudarme a salir de ahí. Te voy a demostrar que, gracias a tu esfuerzo, estaré al 100% para todo lo que venga, y te seguiré amando tanto tanto tanto tanto tanto tanto TANTOOOOOOOOOOOOO.</p>
+
+      <p>Muero por vivir todo lo que tenemos planeado mi amor, desde irnos a vivir al calorón hasta estar con nuestros 13 gatos jijiji. Te amo mi niña, gracias por ser mi novia amorcito precioso. La única forma de la que dejarás de ser mi novia es porque nos casamos y seas mi esposa. Te amo mi bebé,</p>
+    </div>
+
+    <div class="cierre">
+      <svg aria-hidden="true"><use href="#corazon"/></svg>
+      <p>gracias por amarme y gracias por dejarme amarte.</p>
+      <svg aria-hidden="true"><use href="#corazon"/></svg>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

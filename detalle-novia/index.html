@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Para ti, mi jarcianita</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600&family=Young+Serif&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tinta:#12386b; --amarillo:#ffb703; --verde:#3fae4f; --verde-osc:#2f8f45;
+  --serif:"Young Serif",Georgia,serif; --sans:"Figtree",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  min-height:100vh; color:var(--tinta); font-family:var(--sans); text-align:center;
+  background:linear-gradient(to bottom,#7cc4ff 0%,#b9e0ff 55%,#e6f6ff 100%) fixed;
+  padding:2rem 1rem 6rem; position:relative; overflow-x:hidden;
+}
+/* Decorado del cielo y el pasto */
+.sol{position:fixed; top:1rem; right:1.2rem; width:84px; height:84px; border-radius:50%; z-index:0;
+  background:radial-gradient(circle,#fff6b0 0%,#ffd84a 60%,#ffc233 100%);
+  box-shadow:0 0 50px 22px rgba(255,214,80,.55)}
+.nube{position:fixed; width:110px; height:30px; background:#fff; border-radius:30px; opacity:.92; z-index:0; animation:mece 26s ease-in-out infinite alternate}
+.nube::before,.nube::after{content:""; position:absolute; background:#fff; border-radius:50%}
+.nube::before{width:48px; height:48px; top:-22px; left:16px}
+.nube::after{width:62px; height:62px; top:-32px; left:48px}
+.n1{top:14%; left:8%} .n2{top:26%; left:58%; transform:scale(.8); animation-duration:34s} .n3{top:8%; left:36%; transform:scale(.6); animation-duration:40s}
+@keyframes mece{from{translate:-4vw 0}to{translate:4vw 0}}
+body::after{content:""; position:fixed; left:-5%; right:-5%; bottom:0; height:15vh; z-index:0;
+  background:linear-gradient(#85d686,#3f9a4e); border-radius:50% 50% 0 0 / 28px 28px 0 0}
+.contenido{position:relative; z-index:1}
+h1{font-family:var(--serif); font-weight:400; font-size:clamp(1.8rem,6vw,3rem); margin:1rem 0 .8rem}
+.guia{margin:0 0 1.5rem}
+#jardin{display:grid; grid-template-columns:repeat(6,1fr); gap:.5rem; max-width:900px; margin:0 auto}
+.parcela{background:none; border:0; padding:0; cursor:pointer; color:inherit; font:inherit; min-width:0}
+.parcela:focus-visible{outline:3px solid var(--tinta); outline-offset:4px; border-radius:12px}
+.parcela svg{width:100%; height:auto; display:block; overflow:visible}
+.fecha{display:block; font-size:.78rem; font-weight:600; line-height:1.2; opacity:0; transition:opacity .6s ease .9s; margin-top:.2rem}
+.parcela.abierta .fecha{opacity:1}
+.tallo{fill:none; stroke:var(--verde-osc); stroke-width:4; stroke-linecap:round; stroke-dasharray:220; stroke-dashoffset:220; transition:stroke-dashoffset .9s ease-out}
+.hoja{fill:var(--verde); transform-box:fill-box; transform-origin:0% 100%; transform:scale(0); transition:transform .5s ease-out .5s}
+.cabeza{transform-box:fill-box; transform-origin:center; transform:scale(0) rotate(-60deg); transition:transform .9s cubic-bezier(.2,1.4,.4,1) .8s}
+.brote{fill:var(--verde); stroke:var(--verde-osc); stroke-width:2; animation:late 1.6s ease-in-out infinite; transform-box:fill-box; transform-origin:50% 100%}
+.parcela.abierta .brote{display:none}
+.parcela.abierta .tallo{stroke-dashoffset:0}
+.parcela.abierta .hoja{transform:scale(1)}
+.parcela.abierta .cabeza{transform:scale(1) rotate(0)}
+@keyframes late{50%{transform:scale(1.18)}}
+#nota{
+  max-width:36rem; min-height:8rem; margin:1.5rem auto 0; padding:1.2rem 1.4rem;
+  border:1px solid rgba(18,56,107,.2); border-radius:18px; background:rgba(255,255,255,.85);
+  font-family:var(--serif); font-size:clamp(1.05rem,3.4vw,1.3rem); line-height:1.55;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.8rem;
+}
+#nota span{transition:opacity .4s}
+#nota img{max-height:120px; max-width:100%; border-radius:12px}
+#cuenta{margin-top:.8rem; font-size:.9rem; min-height:1.2em; font-weight:600}
+#final{display:none; max-width:42rem; margin:3rem auto 0}
+#final.visible{display:block}
+#final h2{font-family:var(--serif); font-weight:400; font-size:clamp(1.6rem,5vw,2.4rem); margin:0 0 1rem}
+#final p{font-size:1.1rem; line-height:1.6; margin:0 auto 1.5rem; max-width:32rem}
+#final p:empty{display:none}
+#fotos{display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; margin:1.5rem 0 2rem}
+#fotos img{
+  width:min(42vw,200px); aspect-ratio:3/4; object-fit:cover; background:#fff; padding:8px 8px 28px;
+  border-radius:3px; box-shadow:0 8px 24px rgba(18,56,107,.35);
+}
+#fotos img:nth-child(odd){transform:rotate(-3deg)}
+#fotos img:nth-child(even){transform:rotate(2.5deg)}
+.boton{
+  display:inline-block; background:var(--amarillo); color:#2a1d00; text-decoration:none; font-weight:600;
+  padding:.9rem 1.6rem; border-radius:999px; font-size:1.05rem; box-shadow:0 4px 14px rgba(18,56,107,.25);
+}
+.boton:focus-visible{outline:3px solid var(--tinta); outline-offset:3px}
+@media (max-width:560px){
+  #jardin{grid-template-columns:repeat(3,1fr); row-gap:1.2rem}
+  .sol{width:64px; height:64px}
+}
+@media (prefers-reduced-motion:reduce){
+  .tallo,.hoja,.cabeza,.fecha{transition:none}
+  .brote,.nube{animation:none}
+}
+</style>
+</head>
+<body>
+
+<div class="sol" aria-hidden="true"></div>
+<div class="nube n1" aria-hidden="true"></div>
+<div class="nube n2" aria-hidden="true"></div>
+<div class="nube n3" aria-hidden="true"></div>
+
+<div class="contenido">
+  <h1 id="titulo"></h1>
+  <p class="guia">Toca cada brote y mira cómo florece.</p>
+
+  <div id="jardin"></div>
+  <div id="nota" aria-live="polite"><img id="nota-img" alt="" hidden><span id="nota-texto">Hay seis brotes esperando.</span></div>
+  <div id="cuenta"></div>
+
+  <section id="final">
+    <h2 id="final-titulo"></h2>
+    <div id="fotos"></div>
+    <p id="final-texto"></p>
+    <a class="boton" href="carta.html">Abrir mi carta</a>
+  </section>
+</div>
+
+<script>
+/* ===== EDITA AQUÍ ===== */
+const TITULO = "Para ti, mi jarcianita";
+
+const CAPITULOS = [
+  { fecha: "5 nov 2020",
+    texto: "Me mandaste tu voto para jefe de grupo y hablamos todo el día. Sin saberlo, ahí empezó todo." },
+  { fecha: "13 ene 2021",
+    texto: "“Si tú quieres ser mi Naruto encantada de ser tu Hinata.” Unos niños de 11 y 12 años, empezando lo más bonito de sus vidas." },
+  { fecha: "13 feb 2021",
+    texto: "Vi por primera vez esos ojos tan bellos, y por primera vez sentí la paz que es abrazarte y lo bonito que es besarte.",
+    imagen: "fotos/xenxen.jpg" },   // opcional: foto de tu peluche Jigglypuff; si no existe, no se muestra
+  { fecha: "27 mar 2023",
+    texto: "Aquí volvimos a empezar y nunca más te volveré a soltar. Desde aquí he sido la persona más feliz a tu lado, con un amor tan obeso como ese ramito de photocards." },
+  { fecha: "Hoy",
+    texto: "Hoy, en el Día de la novia, te doy las gracias por todo lo que hemos vivido mi bebé. Espero seas feliz hoy y siempre a mi lado, TE AMOOOOOOO" },
+  { fecha: "Lo que viene",
+    texto: "Tenemos toda una vida pendiente mi amor, y muero por vivirla contigo. Te prometo vivir la vida más perfecta y feliz juntos, y siempre juntos... 💙" }
+];
+const FOTOS = ["fotos/1.jpeg", "fotos/2.jpeg", "fotos/3.jpeg"];   // pon tus fotos en la carpeta fotos/
+const FINAL_TITULO = "Feliz Día de la novia, mi niña hermosa";
+const FINAL_TEXTO = "";
+/* ======================= */
+
+/* ---- Flores (centro en 0,0). Una por capítulo, sin rosas ---- */
+function lili(){
+  let s = "";
+  for(let i = 0; i < 6; i++) s += `<path d="M0 0C-10-12-9-26 0-36 9-26 10-12 0 0Z" fill="#f48fb1" stroke="#f9b9cf" stroke-width="1" transform="rotate(${i*60})"/>`;
+  s += `<g stroke="#fff3b0" stroke-width="1.6" fill="none"><path d="M0 0L-7-15M0 0L0-18M0 0L7-15"/></g>`;
+  s += `<g fill="#ffb703"><circle cx="-7" cy="-15" r="2.4"/><circle cy="-18" r="2.4"/><circle cx="7" cy="-15" r="2.4"/></g>`;
+  return s;
+}
+function gerbera(){
+  let s = "";
+  for(let i = 0; i < 18; i++) s += `<ellipse cy="-21" rx="3.2" ry="15" fill="#a56ee0" transform="rotate(${i*20})"/>`;
+  for(let i = 0; i < 18; i++) s += `<ellipse cy="-17" rx="3" ry="11" fill="#c9a1f5" transform="rotate(${i*20+10})"/>`;
+  return s + `<circle r="9" fill="#f5c84b"/><circle r="5.5" fill="#4a2c6d"/>`;
+}
+function camelia(){
+  let s = "";
+  for(let i = 0; i < 7; i++) s += `<ellipse cy="-21" rx="12" ry="12" fill="#fff4f7" stroke="#ffb3c8" stroke-width="1.2" transform="rotate(${i*51.4})"/>`;
+  for(let i = 0; i < 5; i++) s += `<ellipse cy="-12" rx="8.5" ry="10" fill="#ffd9e4" stroke="#ffa3bd" stroke-width=".9" transform="rotate(${i*72+20})"/>`;
+  return s + `<circle r="7" fill="#f5c84b"/><circle r="3" fill="#e5a50a"/>`;
+}
+function clavel(){
+  let s = "";
+  for(let i = 0; i < 14; i++){
+    const a = i * Math.PI * 2 / 14;
+    s += `<circle cx="${(Math.cos(a)*23).toFixed(1)}" cy="${(Math.sin(a)*23).toFixed(1)}" r="8" fill="#ff7a8a"/>`;
+  }
+  for(let i = 0; i < 10; i++){
+    const a = i * Math.PI * 2 / 10 + .3;
+    s += `<circle cx="${(Math.cos(a)*14).toFixed(1)}" cy="${(Math.sin(a)*14).toFixed(1)}" r="7" fill="#ff9aa7"/>`;
+  }
+  return s + `<circle r="9" fill="#ff5f73"/><circle r="4" fill="#ffb3bc"/>`;
+}
+function girasol(){
+  let s = "";
+  for(let i = 0; i < 16; i++) s += `<ellipse cy="-26" rx="5.5" ry="13" fill="#ffb703" transform="rotate(${i*22.5+11.25})"/>`;
+  for(let i = 0; i < 16; i++) s += `<ellipse cy="-24" rx="5.5" ry="13" fill="#ffd23f" transform="rotate(${i*22.5})"/>`;
+  return s + `<circle r="14" fill="#5a3a1a"/><circle r="9" fill="#3e2713"/><circle r="3" fill="#7a5230"/>`;
+}
+function hortensia(){
+  const pts = [[0,0]];
+  for(let i = 0; i < 6; i++){ const a = i*Math.PI/3; pts.push([Math.cos(a)*11, Math.sin(a)*11]); }
+  for(let i = 0; i < 12; i++){ const a = i*Math.PI/6 + .26; pts.push([Math.cos(a)*22, Math.sin(a)*22]); }
+  return pts.map(([x,y],k) => {
+    const c = k % 2 ? "#7ea4f5" : "#a98cf0";
+    return `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)})" fill="${c}"><circle cx="-3.2" r="4.6"/><circle cx="3.2" r="4.6"/><circle cy="-3.2" r="4.6"/><circle cy="3.2" r="4.6"/><circle r="1.6" fill="#fff"/></g>`;
+  }).join("");
+}
+const FLORES = [lili, gerbera, camelia, clavel, girasol, hortensia];
+const ALTURAS = [74, 54, 80, 58, 66, 78];   // altura de cada flor
+const CURVAS  = [10, -12, 8, -8, 12, -10];  // curvatura del tallo
+
+document.getElementById("titulo").textContent = TITULO;
+
+function parcela(i){
+  const top = ALTURAS[i], q = CURVAS[i];
+  const medio = (205 + top) / 2;
+  return `
+  <button class="parcela" aria-label="Brote ${i+1} de ${CAPITULOS.length}" data-i="${i}">
+    <svg viewBox="0 0 120 225" aria-hidden="true">
+      <ellipse cx="60" cy="214" rx="38" ry="10" fill="#3f9a4e"/>
+      <ellipse cx="60" cy="212" rx="34" ry="7.5" fill="#62bd69"/>
+      <path class="tallo" d="M60 208 Q${60+q} ${medio} 60 ${top+10}"/>
+      <path class="hoja" d="M${60+q/2} ${medio+14} q 26 -6 30 -26 q -26 2 -30 26z"/>
+      <path class="brote" d="M60 210 C50 200 52 188 60 180 C68 188 70 200 60 210Z"/>
+      <g transform="translate(60 ${top})"><g class="cabeza">${FLORES[i]()}</g></g>
+    </svg>
+    <span class="fecha">${CAPITULOS[i].fecha}</span>
+  </button>`;
+}
+
+const jardin = document.getElementById("jardin");
+jardin.innerHTML = CAPITULOS.map((_, i) => parcela(i)).join("");
+
+const notaTexto = document.getElementById("nota-texto");
+const notaImg = document.getElementById("nota-img");
+const cuenta = document.getElementById("cuenta");
+let abiertas = 0;
+
+function mostrar(cap){
+  notaTexto.style.opacity = 0;
+  notaImg.hidden = true;
+  setTimeout(() => {
+    notaTexto.textContent = cap.texto;
+    notaTexto.style.opacity = 1;
+    if(cap.imagen){
+      notaImg.onload = () => { notaImg.hidden = false; };
+      notaImg.onerror = () => { notaImg.hidden = true; };
+      notaImg.src = cap.imagen;
+    }
+  }, 250);
+}
+
+jardin.addEventListener("click", e => {
+  const b = e.target.closest(".parcela");
+  if(!b) return;
+  const i = Number(b.dataset.i);
+  if(!b.classList.contains("abierta")){
+    b.classList.add("abierta");
+    abiertas++;
+    cuenta.textContent = abiertas + " de " + CAPITULOS.length + " flores";
+    if(abiertas === CAPITULOS.length) setTimeout(revelar, 2800);
+  }
+  mostrar(CAPITULOS[i]);
+});
+
+function revelar(){
+  document.getElementById("final-titulo").textContent = FINAL_TITULO;
+  document.getElementById("final-texto").textContent = FINAL_TEXTO;
+  const cont = document.getElementById("fotos");
+  FOTOS.forEach(src => {
+    const img = new Image();
+    img.alt = "Foto de nosotros";
+    img.onload = () => cont.appendChild(img);   // si la foto no existe, simplemente no aparece
+    img.src = src;
+  });
+  const f = document.getElementById("final");
+  f.classList.add("visible");
+  f.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion:reduce)").matches ? "auto" : "smooth", block:"start"});
+}
+</script>
+</body>
+</html>
